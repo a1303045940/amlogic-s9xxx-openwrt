@@ -349,7 +349,7 @@ jobs:
           # Get name (file name) and url (API asset URL)
           latest_version=$(curl -s \
               -H "Accept: application/vnd.github+json" \
-              -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
               https://api.github.com/repos/${{ github.repository }}/releases?per_page=20 | \
               jq -r --arg RTK "OpenWrt_${{ inputs.source_branch }}_" \
               --arg BOARD "-rootfs.tar.gz" \
@@ -372,7 +372,7 @@ jobs:
           # Download using API method (add octet-stream header)
           echo "Downloading: ${openwrt_filename}"
           curl -fsSL \
-               -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+               -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
                -H "Accept: application/octet-stream" \
                "${latest_url}" \
                -o "${armsr_tarfile_path}/${openwrt_filename}"
@@ -408,7 +408,7 @@ jobs:
           removeArtifacts: false
           replacesArtifacts: true
           makeLatest: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_TOKEN }}
           body: |
             ### OpenWrt Image information
             - Default IP: `192.168.1.1`
